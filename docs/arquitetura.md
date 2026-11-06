@@ -1,63 +1,47 @@
-# Organização MVC
+# Arquitetura MVC
 
-A aplicação será organizada em Model, View e Controller, conforme solicitado pelo estudante. Esta é a estrutura planejada; a implementação da aplicação ainda não começou.
+A aplicação usa Java 17+, Swing e Java2D, sem dependências externas. Cada cenário é configurado no mesmo mapa de testes e pode ser selecionado por input na interface, como permitido pelo enunciado.
 
 ## Model
 
-Responsável pelo estado e pelas regras da simulação:
+- `Vec2`: vetores imutáveis e operações geométricas.
+- `Agent`: posição, velocidade, orientação, pesos, limites, semente aleatória, progresso na rota e estado de depuração.
+- `AgentProfile`: nomes e descrições dos seis comportamentos e das duas combinações.
+- `World`: criação do mapa e do agente de cada cenário, atualização, edição de alvos/rotas/obstáculos e salvaguarda física de colisão.
+- `Route`: projeção em segmentos e distância acumulada.
+- `Obstacle`: volume circular e tipo de elemento do parque.
+- `SteeringBehavior`: contrato para produzir uma força vetorial.
+- `Seek`, `Flee`, `Arrive`, `Wander`, `ObstacleAvoidance` e `PathFollowing`: implementação de cada comportamento.
+- `SteeringMixer`: soma ponderada e contenção auxiliar das bordas.
 
-- Vetores, forças, aceleração, velocidade e posição.
-- Agentes humanos, obstáculos, alvos e caminhos.
-- Seek, Flee, Arrive, Wander, Obstacle Avoidance e Path Following.
-- Combinações de comportamentos e seus pesos.
-- Evolução do mundo a partir de um intervalo de tempo.
-- Configurações dos cenários de demonstração.
-
-O Model não dependerá de Swing, de Java2D ou de componentes visuais. Seus dados representarão a simulação, sem executar desenho ou tratar cliques.
+O Model não importa `java.awt` nem `javax.swing`. Regras de movimentação não dependem de componentes ou tamanho da janela. O mundo tem 1080×720 unidades e a View aplica escala para caber na área disponível.
 
 ## View
 
-Responsável pela apresentação com Swing e Java2D:
+- `MainView`: seleção de cenários, botões, sliders, informações do agente e instruções.
+- `MapPanel`: desenho da praça, personagens, obstáculos, rotas, alvos, rastros e vetores. Converte coordenadas do clique para unidades do mundo.
+- `Theme` e `PillButton`: tipografia, cores e componentes visuais.
 
-- Janela e organização dos painéis.
-- Desenho da praça/parque, dos pedestres, dos obstáculos e das rotas.
-- Desenho opcional de vetores e outras informações da simulação.
-- Controles para selecionar cenários e ajustar parâmetros.
-- Exibição do estado de pausa e das informações do agente selecionado.
-
-A View consultará o estado do Model para desenhar. As ações do usuário serão encaminhadas ao Controller, sem implementar fórmulas de steering nos componentes gráficos.
+A View consulta o estado do Model para desenhar, mas não altera posição, pesos ou alvos diretamente. O contrato `MainView.Actions` encaminha comandos ao Controller.
 
 ## Controller
 
-Responsável por coordenar a interação e a execução:
+`SimulationController` implementa as ações da View. Interpreta eventos, altera parâmetros do agente, carrega os cenários, controla pausa, reinício e edição de rotas, e coordena o ciclo da simulação.
 
-- Receber cliques, comandos de teclado e alterações nos controles.
-- Traduzir as entradas em alterações de alvos, cenários e parâmetros do Model.
-- Coordenar pausa, reinício e avanço da simulação.
-- Medir o tempo decorrido, solicitar a atualização do Model e pedir o redesenho da View.
+Um `javax.swing.Timer` solicita atualizações aproximadamente a cada 16 ms. O tempo real é medido com `System.nanoTime`; atrasos grandes são limitados e o Model divide o intervalo em subpassos de até 1/120 s. A View solicita o redesenho ao final da atualização.
 
-As atualizações do Model e a leitura feita pela View serão coordenadas na thread de eventos do Swing, mantendo uma sequência consistente de atualização e desenho.
+Eventos, alterações no Model e pintura são serializados na **Event Dispatch Thread** do Swing. O Model permanece independente desse mecanismo: pode ser simulado por chamadas diretas a `World.update(dt)`, como nas verificações numéricas.
 
-## Estrutura prevista
+## Entrada
 
-```text
-src/main/java/br/edu/steering/
-  App.java
-  model/
-    math/
-    behavior/
-    scenario/
-  view/
-  controller/
-```
+`App` cria e conecta Model, View e Controller, configura a janela e inicia o ciclo. Ao fechar a janela, o Timer é encerrado.
 
-`App` será apenas o ponto de entrada que cria e conecta as partes. Os pacotes internos do Model separarão matemática, comportamentos e cenários. Agentes, mundo, obstáculos e rotas também pertencerão ao Model.
+## Fluxo de uma interação
 
-## Fluxo de interação
+1. O usuário muda um peso na View.
+2. O evento chama `SimulationController.changeWeight`.
+3. O Controller atualiza o peso no Agent.
+4. Na próxima atualização, o Mixer aplica esse peso à força do comportamento.
+5. O Model integra a força; a View desenha o estado atualizado.
 
-1. O usuário seleciona um cenário ou interage com o mapa na View.
-2. O Controller interpreta a ação e configura o Model.
-3. A cada atualização, o Model calcula as forças e evolui os agentes.
-4. O Controller solicita que a View desenhe o estado atualizado.
-
-Os testes apresentados à professora serão cenários acessíveis pela interface, cobrindo os seis comportamentos e pelo menos duas combinações. A mesma separação MVC será preservada nesses cenários.
+A edição de caminhos pausa a simulação e exige dois pontos válidos antes de continuar. O reinício recria o mapa e restaura os parâmetros e a semente aleatória do cenário.

@@ -19,3 +19,7 @@ tmp/
 # Arquivos do sistema
 .DS_Store
 Thumbs.db
+
+# Artefatos gerados localmente
+dist/
+output/

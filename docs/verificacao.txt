@@ -1,0 +1,27 @@
+PASS Normalização do vetor zero é segura
+PASS Limite de magnitude preserva a direção
+PASS Projeção e distância acumulada em rota com curva
+PASS Seek reduz a distância até o alvo
+PASS Arrive alcança o destino e para
+PASS Alvo perto da borda é mantido em região alcançável
+PASS Flee aumenta a distância e repousa fora do raio
+PASS Wander produz exploração contínua
+PASS Reinício com semente fixa reproduz Wander
+PASS Obstacle Avoidance contorna a fonte sem contatos físicos
+PASS Peso zero no desvio revela contato com o obstáculo (controle)
+PASS Path Following percorre os segmentos e encerra o trajeto
+PASS Rota + desvio + chegada concluem o percurso sem contato
+PASS Wander + desvio mantém exploração sem contatos por 60 s
+PASS Limites físicos e posições válidas nos oito cenários
+PASS Intervalos de tempo inválidos não alteram a simulação
+PASS Botão Pausar interrompe a evolução do Model
+PASS Avanço de um quadro funciona durante a pausa
+PASS Seleção de cenário e slider chegam ao Model pelo Controller
+PASS Slider de peso altera a contribuição da combinação ativa
+PASS Ferramenta adiciona obstáculo ao mapa
+PASS Botão direito remove o obstáculo
+PASS Editor exige pelo menos dois pontos para continuar
+PASS Editor substitui a rota por pontos da interface
+PASS Atalho D alterna a visualização de vetores
+PASS Interface renderizada nos tamanhos 1536×960 e 1180×760
+RESULTADO: 26 verificações aprovadas; 0 falhas.
