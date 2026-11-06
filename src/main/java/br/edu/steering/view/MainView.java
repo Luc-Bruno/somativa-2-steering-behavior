@@ -4,6 +4,7 @@ import br.edu.steering.model.*;
 import br.edu.steering.model.AgentProfile;
 
 import java.awt.*;
+import java.awt.geom.Path2D;
 import java.util.EnumMap;
 import java.util.Locale;
 
@@ -148,13 +149,37 @@ public final class MainView extends JPanel {
                     protected void paintComponent(Graphics graphics) {
                         Graphics2D g = (Graphics2D) graphics.create();
                         Theme.quality(g);
-                        g.setColor(new Color(0x9BBB94));
+                        g.setPaint(
+                                new GradientPaint(
+                                        0, 0, new Color(0xC5D9B5),
+                                        44, 44, new Color(0x98B99A)));
                         g.fillRoundRect(0, 0, 44, 44, 14, 14);
-                        g.setColor(Theme.INK);
-                        g.setStroke(new BasicStroke(2));
-                        g.drawLine(13, 31, 31, 13);
-                        g.drawArc(10, 8, 25, 25, 0, 180);
-                        g.drawArc(8, 10, 25, 25, 180, 180);
+                        g.setColor(new Color(0xF5D88C));
+                        g.fillOval(31, 7, 6, 6);
+
+                        Path2D path = new Path2D.Double();
+                        path.moveTo(18, 39);
+                        path.curveTo(19, 33, 33, 32, 32, 28);
+                        path.curveTo(31, 26, 28, 25, 28, 23);
+                        path.lineTo(31, 23);
+                        path.curveTo(31, 25, 37, 26, 37, 30);
+                        path.curveTo(37, 35, 27, 35, 28, 39);
+                        path.closePath();
+                        g.setColor(new Color(0xF7F4DE));
+                        g.fill(path);
+
+                        g.setColor(new Color(0x315B47));
+                        g.fillRoundRect(15, 22, 3, 11, 3, 3);
+                        g.setColor(new Color(0x25634D));
+                        g.fillOval(5, 14, 16, 14);
+                        g.fillOval(12, 13, 16, 14);
+                        g.fillOval(9, 7, 16, 18);
+                        g.setColor(new Color(0x3C7B5A));
+                        g.fillOval(10, 9, 10, 10);
+
+                        g.setColor(new Color(255, 255, 255, 55));
+                        g.setStroke(new BasicStroke(1));
+                        g.drawRoundRect(1, 1, 41, 41, 12, 12);
                         g.dispose();
                     }
                 };
