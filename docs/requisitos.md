@@ -35,8 +35,12 @@ O trabalho vale 4,0 pontos. Não há uma distribuição de pontos por comportame
 - Linguagem Java.
 - Java puro, sem bibliotecas externas. O enunciado não especifica uma versão do Java, IDE ou biblioteca gráfica.
 - Interface criada para este projeto.
+- Organização MVC solicitada pelo estudante: regras e estado no Model, apresentação na View e coordenação no Controller.
 - Não utilizar o template como base da aplicação.
 - Não realizar o trabalho teórico que concede o ponto extra.
+- Manter o repositório GitHub público.
+- Realizar a entrega prática em código, com os testes executados e demonstrados à professora pela interface gráfica.
+- Não produzir entrega teórica em PDF. O estudante esclareceu que a menção ao PDF corresponde à alternativa de trabalho totalmente teórico, que não será adotada.
 - Utilizar personagens humanos em uma praça/parque 2D visto de cima, opção confirmada pelo estudante.
 - Entregar até 6 de novembro de 2026, às 18h, no fuso America/Sao_Paulo, conforme prazo informado pelo estudante em 5 de novembro.
 
@@ -61,10 +65,11 @@ Nenhum arquivo do template foi incorporado ao projeto.
 - Ambiente 2D visto de cima, com pedestres em um parque ou praça.
 - Interface própria com Swing e Java2D, disponíveis na plataforma Java.
 - Demonstração individual de cada comportamento.
+- Cenários de teste acessíveis pela interface para apresentar cada comportamento e as duas combinações à professora.
 - Combinação A: Wander + Obstacle Avoidance, para passeio sem destino fixo.
 - Combinação B: Path Following + Obstacle Avoidance + Arrive, para percurso com parada no destino final.
 - Controles para pesos, pausa, reinício e vetores, caso sejam úteis para a apresentação.
-- Separação entre matemática, comportamentos, simulação e interface para facilitar explicação e manutenção.
+- Organização MVC conforme [arquitetura.md](arquitetura.md), com matemática, comportamentos e estado independentes da interface gráfica.
 
 As propostas desta seção não constituem funcionalidades já implementadas.
 
@@ -72,7 +77,5 @@ As propostas desta seção não constituem funcionalidades já implementadas.
 
 1. Data da arguição.
 2. Detalhes do estilo visual, que podem ser definidos durante a implementação.
-3. Entrega em PDF: o cabeçalho menciona PDF, enquanto a seção de entregáveis especifica GitHub com código e README. Não há instrução suficiente para determinar o conteúdo desse PDF.
-4. Forma de dar acesso à professora caso o repositório permaneça privado.
 
 Esses pontos não impedem o início da implementação.
