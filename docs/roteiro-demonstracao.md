@@ -10,7 +10,7 @@ Abra `Executar.cmd`. A aplicação começa em **Rota segura**, com a combinaçã
 | 2 — Flee | Selecione 2 e clique perto do agente para colocar a ameaça | O agente se afasta enquanto a ameaça está no raio de percepção e freia quando está seguro |
 | 3 — Arrive | Selecione 3 e clique em outro destino | O círculo indica a área de desaceleração; a velocidade cai perto do alvo e o agente para |
 | 4 — Wander | Selecione 4 e observe o círculo de depuração à frente | Um alvo local muda suavemente de direção, mantendo memória e produzindo exploração |
-| 5 — Obstacle Avoidance | Selecione 5; acompanhe o sensor e a passagem pela fonte | O sensor detecta a fonte antes do contato; a força lateral desvia o agente |
+| 5 — Obstacle Avoidance | Selecione 5; acompanhe o sensor e a passagem pela fonte | O sensor detecta a fonte antes do contato; o agente busca uma direção tangente e mantém espaço de conforto |
 | 5b — Comparação | Reinicie o cenário 5 e zere o peso Obstacle Avoidance antes de ele chegar à fonte | Seek continua buscando o alvo, mas o agente toca na fonte; o contador registra a salvaguarda de colisão |
 | 6 — Path Following | Selecione 6; observe a projeção e o alvo adiante na rota | O agente acompanha segmentos e desacelera no fim; os pontos são fornecidos, não calculados por A* |
 
@@ -18,7 +18,7 @@ Abra `Executar.cmd`. A aplicação começa em **Rota segura**, com a combinaçã
 
 ### Passeio livre — 7
 
-Mostre a exploração e o desvio atuando juntos. Os pesos iniciais são Wander **0,9** e Obstacle Avoidance **2,6**. Explique que o desvio precisa superar a intenção de explorar quando há risco à frente. Adicione um canteiro em uma área livre e observe a reação.
+Mostre a exploração e o desvio atuando juntos. Os pesos iniciais são Wander **0,9** e Obstacle Avoidance **2,6**. Explique que o desvio precisa superar a intenção de explorar quando há risco à frente. Adicione um canteiro em uma área livre e observe a reação. O mapa foi simplificado para sete obstáculos; o contorno externo exibido com Vetores representa a margem de segurança.
 
 ### Rota segura — 8
 

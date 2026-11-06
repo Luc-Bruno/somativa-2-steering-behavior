@@ -77,24 +77,12 @@ public final class World {
         obstacles.clear();
         draftRoute.clear();
         routeEditor = null;
-        double[][] trees = {
-            {90, 105, 27},
-            {255, 115, 32},
-            {475, 105, 24},
-            {825, 100, 35},
-            {990, 130, 25},
-            {95, 615, 32},
-            {360, 635, 25},
-            {650, 635, 31},
-            {970, 620, 35}
-        };
+        double[][] trees = {{110, 120, 27}, {955, 95, 29}, {75, 640, 25}, {955, 605, 30}};
         for (double[] tree : trees)
             obstacles.add(new Obstacle(new Vec2(tree[0], tree[1]), tree[2], Obstacle.Kind.TREE));
-        obstacles.add(new Obstacle(new Vec2(335, 190), 23, Obstacle.Kind.BENCH));
-        obstacles.add(new Obstacle(new Vec2(760, 555), 23, Obstacle.Kind.BENCH));
+        obstacles.add(new Obstacle(new Vec2(340, 170), 23, Obstacle.Kind.BENCH));
         obstacles.add(new Obstacle(new Vec2(550, 350), 52, Obstacle.Kind.FOUNTAIN));
-        obstacles.add(new Obstacle(new Vec2(420, 550), 29, Obstacle.Kind.GARDEN));
-        obstacles.add(new Obstacle(new Vec2(720, 455), 32, Obstacle.Kind.GARDEN));
+        obstacles.add(new Obstacle(new Vec2(780, 535), 30, Obstacle.Kind.GARDEN));
     }
 
     private Agent createAgent(AgentProfile profile) {
@@ -243,7 +231,11 @@ public final class World {
 
     public boolean setTarget(Agent agent, Vec2 point) {
         Vec2 p = inside(point);
-        if (!isFree(p, Agent.RADIUS + 3)) return false;
+        double comfort =
+                agent.hasBehavior(BehaviorType.AVOIDANCE)
+                        ? br.edu.steering.model.behavior.ObstacleAvoidance.TARGET_CLEARANCE
+                        : 3;
+        if (!isFree(p, Agent.RADIUS + comfort)) return false;
         if (agent.profile().followsPath()) {
             List<Vec2> points = new ArrayList<>(agent.route().points());
             if (p.distance(points.get(points.size() - 2)) < 20) return false;
@@ -263,8 +255,8 @@ public final class World {
         Vec2 p = inside(point);
         if (!isFree(p, 30)) return false;
         for (Agent agent : agents)
-            if (p.distance(agent.position()) < 65
-                    || (!isWandering(agent) && p.distance(agent.target()) < 45)) return false;
+            if (p.distance(agent.position()) < 95
+                    || (!isWandering(agent) && p.distance(agent.target()) < 110)) return false;
         obstacles.add(new Obstacle(p, 27, Obstacle.Kind.GARDEN));
         return true;
     }
@@ -290,7 +282,11 @@ public final class World {
     public boolean addRoutePoint(Vec2 point) {
         if (routeEditor == null) return false;
         Vec2 p = inside(point);
-        if (!isFree(p, Agent.RADIUS + 2) || draftRoute.size() >= 18) return false;
+        double comfort =
+                routeEditor.hasBehavior(BehaviorType.AVOIDANCE)
+                        ? br.edu.steering.model.behavior.ObstacleAvoidance.TARGET_CLEARANCE
+                        : 2;
+        if (!isFree(p, Agent.RADIUS + comfort) || draftRoute.size() >= 18) return false;
         if (!draftRoute.isEmpty() && p.distance(draftRoute.get(draftRoute.size() - 1)) < 30)
             return false;
         draftRoute.add(p);

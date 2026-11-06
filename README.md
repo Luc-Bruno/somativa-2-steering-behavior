@@ -104,7 +104,11 @@ Mantém um círculo de raio **38** a **65 unidades** à frente do agente. Um ân
 
 O cenário usa **Seek (0,8)** como intenção de movimento e **Obstacle Avoidance (2,6)** para atravessar a praça sem bater na fonte.
 
-O sensor olha à frente por `55 + 0,95 × velocidade`. Para considerar o volume do pedestre, cada obstáculo circular é expandido por **raio do agente + 18 unidades de margem**. A projeção longitudinal/lateral identifica o primeiro obstáculo interceptado pelo corredor do sensor. A resposta soma força lateral e frenagem conforme a proximidade. O lado de desvio fica associado ao obstáculo para reduzir oscilações.
+O sensor antecipa o movimento por `80 + 0,9 × velocidade + velocidade² / (2 × força máxima)`, considerando tanto a direção atual quanto a velocidade desejada pelos demais comportamentos. Cada obstáculo é expandido por **raio do agente + 36 unidades de margem**, com uma faixa suave de conforto de mais 24 unidades.
+
+Ao detectar uma ameaça, o desvio calcula uma direção tangente ao círculo expandido e uma velocidade de passagem. A força aproxima a velocidade atual dessa velocidade segura. Uma contribuição radial afasta o pedestre dos obstáculos próximos; o lado do contorno é mantido para reduzir oscilações e pode mudar se levar a uma borda. As alternativas também consideram obstáculos vizinhos.
+
+O Mixer calcula a intenção de movimento, incluindo Path Following e a contenção das bordas, antes de calcular o desvio. Isso reduz o cancelamento de forças que fazia o pedestre parar em certas aproximações. Alvos e finais de rotas com desvio precisam de espaço livre de chegada. O mapa inicial tem **7 obstáculos fixos** para preservar corredores mais abertos. Com Vetores ativo, o contorno externo mostra a margem de passagem.
 
 O desvio é antecipatório. Uma correção de penetração existe como salvaguarda física e incrementa o contador **contatos físicos**; ela não é contabilizada como sucesso do comportamento. Para comparar, reinicie, zere o peso do desvio e observe o contato com a fonte.
 
@@ -170,7 +174,9 @@ Os testes da apresentação são realizados na própria interface. Para conferir
 Verificar.cmd
 ```
 
-Ela compila o projeto, verifica os comportamentos, compara o desvio com peso ativo e zerado, confirma conclusão de rotas, limites físicos, pausa, sliders e edição de obstáculos/rotas. Também renderiza a interface em **1536×960** e **1180×760**. O relatório e as imagens ficam em `output/`. Nenhum framework de testes é necessário. A última execução concluiu **26 verificações, sem falhas**; consulte o [relatório](docs/verificacao.txt).
+Ela compila o projeto, verifica os comportamentos, compara o desvio com peso ativo e zerado, confirma conclusão de rotas, limites físicos, pausa, sliders e edição de obstáculos/rotas. Também renderiza a interface em **1536×960** e **1180×760**. O relatório e as imagens ficam em `output/`. Nenhum framework de testes é necessário. A última execução concluiu **27 verificações gerais e 12 testes prolongados, sem falhas**. Os testes prolongados cobrem 30 minutos e 10 segundos simulados, incluindo 10 minutos de passeio livre, aproximações da fonte pelos quatro lados, velocidade/força diferentes, obstáculo adicionado e atualizações a 30/144 Hz. Eles exigem progresso, parada final nas rotas, ausência de contatos e folga mínima de 32 unidades.
+
+Consulte o [relatório geral](docs/verificacao.txt) e a [comparação antes/depois do desvio](docs/testes-desvio.md). As trajetórias CSV e o resumo prolongado são gerados em `output/stress/`.
 
 ## Referência conceitual
 

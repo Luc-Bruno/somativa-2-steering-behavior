@@ -319,6 +319,16 @@ public final class MapPanel extends JPanel {
                             new float[] {3, 5},
                             0));
             g.draw(new Ellipse2D.Double(p.x() - r, p.y() - r, r * 2, r * 2));
+            if (world.firstAgent().hasBehavior(BehaviorType.AVOIDANCE)) {
+                double buffer =
+                        r
+                                + Agent.RADIUS
+                                + br.edu.steering.model.behavior.ObstacleAvoidance.SAFETY_MARGIN;
+                g.setColor(new Color(197, 116, 73, 48));
+                g.draw(
+                        new Ellipse2D.Double(
+                                p.x() - buffer, p.y() - buffer, buffer * 2, buffer * 2));
+            }
         }
     }
 

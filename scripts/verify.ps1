@@ -12,3 +12,6 @@ $taskSources = @(Get-ChildItem -LiteralPath (Join-Path $taskRoot 'src\test\java'
 if ($LASTEXITCODE -ne 0) { throw 'Falha na compilacao das verificacoes.' }
 & $taskToolchain.Java '-Djava.awt.headless=true' -cp "$taskMainClasses;$taskTestClasses" br.edu.steering.Verification $taskOutput
 if ($LASTEXITCODE -ne 0) { throw 'Uma ou mais verificacoes falharam.' }
+
+& $taskToolchain.Java -cp "$taskMainClasses;$taskTestClasses" br.edu.steering.model.AvoidanceStressTest (Join-Path $taskOutput 'stress')
+if ($LASTEXITCODE -ne 0) { throw 'Uma ou mais verificacoes prolongadas de desvio falharam.' }

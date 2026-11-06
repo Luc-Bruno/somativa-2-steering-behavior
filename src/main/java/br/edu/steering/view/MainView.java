@@ -377,8 +377,8 @@ public final class MainView extends JPanel {
         JTextArea formula = textArea(11, Theme.MUTED);
         formula.setText(
                 "F = Σ (peso × força)\n"
-                    + "A soma é limitada pela força máxima.\n"
-                    + "Zero retira a contribuição do comportamento.");
+                        + "A soma é limitada pela força máxima.\n"
+                        + "Zero retira a contribuição do comportamento.");
         formula.setPreferredSize(new Dimension(205, 62));
         formula.setMaximumSize(new Dimension(Integer.MAX_VALUE, 70));
         content.add(formula);

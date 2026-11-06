@@ -1,0 +1,11 @@
+PASS desvio-padrao | chegada=7.38s | permanência local=0.27s | baixa velocidade=0.00s | folga=18.00 | contatos=0 | distância final=0.23
+FAIL passeio-10-minutos | chegada=-1.00s | permanência local=17.53s | baixa velocidade=19.05s | folga=0.00 | contatos=329 | distância final=399.84
+FAIL rota-segura | chegada=28.33s | permanência local=5.32s | baixa velocidade=12.47s | folga=18.02 | contatos=0 | distância final=2.83
+PASS fonte-direita-esquerda | chegada=7.48s | permanência local=0.27s | baixa velocidade=0.00s | folga=18.00 | contatos=0 | distância final=0.00
+PASS fonte-sul-norte | chegada=5.63s | permanência local=0.33s | baixa velocidade=0.00s | folga=18.00 | contatos=0 | distância final=0.04
+FAIL fonte-norte-sul | chegada=14.93s | permanência local=6.58s | baixa velocidade=7.35s | folga=18.01 | contatos=0 | distância final=0.01
+PASS desvio-rapido | chegada=5.22s | permanência local=0.53s | baixa velocidade=0.07s | folga=18.01 | contatos=0 | distância final=2.55
+PASS desvio-forca-menor | chegada=9.00s | permanência local=0.35s | baixa velocidade=0.13s | folga=18.00 | contatos=0 | distância final=2.38
+PASS obstaculo-adicionado | chegada=7.40s | permanência local=0.23s | baixa velocidade=0.00s | folga=18.01 | contatos=0 | distância final=0.02
+FAIL rota-vertical | chegada=-1.00s | permanência local=8.82s | baixa velocidade=75.80s | folga=18.14 | contatos=0 | distância final=220.30
+RESULTADO: 6/10 testes prolongados aprovados.

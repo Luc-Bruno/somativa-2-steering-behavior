@@ -23,15 +23,27 @@ public final class SteeringMixer {
 
     public Vec2 calculate(Agent agent, World world, double dt) {
         agent.beginForces();
-        Vec2 total = Vec2.ZERO;
+        Vec2 total = boundaryForce(agent);
+        // Calcula primeiro a intenção completa, incluindo Path Following e a borda.
         for (BehaviorType type : BehaviorType.values()) {
-            if (agent.weight(type) <= 0) continue;
+            if (type == BehaviorType.AVOIDANCE || agent.weight(type) <= 0) continue;
             Vec2 weighted =
                     behaviors.get(type).calculate(agent, world, dt).multiply(agent.weight(type));
             agent.recordForce(type, weighted);
             total = total.add(weighted);
         }
-        return total.add(boundaryForce(agent));
+        agent.setPreferredVelocity(
+                agent.velocity().add(total.multiply(.45 / agent.mass())).limit(agent.maxSpeed()));
+        if (agent.weight(BehaviorType.AVOIDANCE) > 0) {
+            Vec2 avoid =
+                    behaviors
+                            .get(BehaviorType.AVOIDANCE)
+                            .calculate(agent, world, dt)
+                            .multiply(agent.weight(BehaviorType.AVOIDANCE));
+            agent.recordForce(BehaviorType.AVOIDANCE, avoid);
+            total = total.add(avoid);
+        }
+        return total;
     }
 
     /** Contenção suave do mapa, auxiliar e independente dos seis comportamentos. */

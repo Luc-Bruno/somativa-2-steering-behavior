@@ -7,7 +7,7 @@ public enum AgentProfile {
             "BÁSICOS",
             "Buscar sem frear",
             "O pedestre busca o alvo mantendo a velocidade desejada. Ao alcançá-lo, pode"
-                + " ultrapassá-lo: Seek não planeja a parada.",
+                    + " ultrapassá-lo: Seek não planeja a parada.",
             "Clique no mapa para mudar o alvo."),
     FLEE(
             "02",
@@ -15,7 +15,7 @@ public enum AgentProfile {
             "BÁSICOS",
             "Manter uma distância segura",
             "O pedestre foge da ameaça dentro do raio de percepção. Quando está seguro, desacelera."
-                + " O círculo laranja mostra esse raio.",
+                    + " O círculo laranja mostra esse raio.",
             "Clique perto do pedestre para reposicionar a ameaça."),
     ARRIVE(
             "03",
@@ -23,7 +23,7 @@ public enum AgentProfile {
             "BÁSICOS",
             "Chegar com suavidade",
             "A velocidade desejada diminui na área de chegada. O pedestre freia de forma gradual e"
-                + " para junto ao destino.",
+                    + " para junto ao destino.",
             "Mude o destino e observe a desaceleração."),
     WANDER(
             "04",
@@ -31,15 +31,15 @@ public enum AgentProfile {
             "BÁSICOS",
             "Explorar sem destino fixo",
             "Um alvo em um círculo à frente muda suavemente de direção. O movimento mantém memória,"
-                + " em vez de sortear um destino distante a cada quadro.",
+                    + " em vez de sortear um destino distante a cada quadro.",
             "Ative os vetores para acompanhar as mudanças de direção."),
     AVOIDANCE(
             "05",
             "Obstacle Avoidance",
             "NAVEGAÇÃO",
             "Olhar à frente e desviar",
-            "Seek fornece a intenção de movimento. O sensor prevê obstáculos à frente e acrescenta"
-                + " uma força lateral e frenagem para contorná-los.",
+            "Seek fornece a intenção de movimento. O desvio considera a direção atual e a desejada,"
+                    + " contornando os obstáculos por tangentes com espaço de conforto.",
             "Use a ferramenta Obstáculo ou reduza o peso do desvio para comparar."),
     PATH(
             "06",
@@ -47,7 +47,7 @@ public enum AgentProfile {
             "NAVEGAÇÃO",
             "Encontrar o próximo trecho",
             "O pedestre projeta seu movimento na rota e busca um ponto adiante. Acompanhamento"
-                + " contínuo dos segmentos, com desaceleração no fim.",
+                    + " contínuo dos segmentos, com desaceleração no fim.",
             "Use a ferramenta Rota para desenhar um novo percurso."),
     FREE_WALK(
             "07",
@@ -55,7 +55,7 @@ public enum AgentProfile {
             "COMBINAÇÕES",
             "Wander + desvio de obstáculos",
             "O pedestre combina exploração e antecipação de obstáculos. O desvio tem peso maior"
-                + " para preservar espaço ao redor das árvores e da fonte.",
+                    + " para preservar espaço ao redor das árvores e da fonte.",
             "Adicione obstáculos ou compare o desvio com peso zero."),
     SAFE_ROUTE(
             "08",
@@ -63,7 +63,7 @@ public enum AgentProfile {
             "COMBINAÇÕES",
             "Rota + desvio + chegada",
             "Path Following conduz o percurso; Obstacle Avoidance contorna os obstáculos; Arrive"
-                + " assume a aproximação final para uma parada suave.",
+                    + " assume a aproximação final para uma parada suave.",
             "Compare os pesos e observe o desvio da fonte no meio da rota.");
     private final String number, title, group, subtitle, description, instruction;
 

@@ -14,6 +14,7 @@ public final class Agent {
     private final AgentProfile profile;
     private Vec2 target;
     private Route route;
+    private Vec2 preferredVelocity = Vec2.ZERO;
     private Vec2 committedObstacle;
     private double avoidanceSide;
     private final int id;
@@ -74,12 +75,28 @@ public final class Agent {
         pathProgress = 0;
     }
 
-    public double avoidanceDirection(Vec2 obstacle, double across) {
+    public double avoidanceDirection(Vec2 obstacle, double preferredSide) {
         if (!obstacle.equals(committedObstacle)) {
             committedObstacle = obstacle;
-            avoidanceSide = Math.abs(across) < 1 ? (id % 2 == 0 ? -1 : 1) : -Math.signum(across);
+            avoidanceSide = preferredSide;
         }
         return avoidanceSide;
+    }
+
+    public void clearAvoidance() {
+        committedObstacle = null;
+    }
+
+    public void changeAvoidanceSide(double side) {
+        avoidanceSide = side;
+    }
+
+    public Vec2 preferredVelocity() {
+        return preferredVelocity;
+    }
+
+    public void setPreferredVelocity(Vec2 value) {
+        preferredVelocity = value;
     }
 
     public int id() {

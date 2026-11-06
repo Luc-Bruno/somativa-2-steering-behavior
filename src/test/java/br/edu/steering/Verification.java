@@ -82,10 +82,10 @@ public final class Verification {
                         && world.firstAgent().speed() < .7,
                 "Arrive alcança o destino e para");
         world.load(AgentProfile.ARRIVE);
-        world.setTarget(new Vec2(1, 350));
+        world.setTarget(new Vec2(1080, 350));
         simulate(world, 24);
         check(
-                world.target().x() >= 75
+                world.target().x() <= World.WIDTH - 75
                         && world.firstAgent().position().distance(world.target()) < 5,
                 "Alvo perto da borda é mantido em região alcançável");
         world.load(AgentProfile.FLEE);
@@ -151,6 +151,27 @@ public final class Verification {
                         && world.firstAgent().speed() < 1
                         && world.totalContacts() == 0,
                 "Rota + desvio + chegada concluem o percurso sem contato");
+        Agent resting =
+                new Agent(
+                        AgentProfile.SAFE_ROUTE,
+                        world.target(),
+                        -Math.PI / 2,
+                        world.target(),
+                        world.route());
+        resting.setPathProgress(world.route().length());
+        resting.setWeight(BehaviorType.PATH, 1);
+        resting.setWeight(BehaviorType.ARRIVE, .9);
+        resting.setWeight(BehaviorType.AVOIDANCE, 2.8);
+        br.edu.steering.model.behavior.SteeringMixer restingMixer =
+                new br.edu.steering.model.behavior.SteeringMixer();
+        double drift = 0;
+        for (int i = 0; i < 300; i++) {
+            resting.integrate(restingMixer.calculate(resting, world, 1.0 / 60), 1.0 / 60);
+            drift = Math.max(drift, resting.position().distance(world.target()));
+        }
+        check(
+                drift < .1 && resting.speed() < .1,
+                "Desvio não inicia uma manobra quando o agente já está parado no destino");
         world.load(AgentProfile.FREE_WALK);
         simulate(world, 60);
         check(

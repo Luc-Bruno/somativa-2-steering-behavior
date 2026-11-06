@@ -12,7 +12,7 @@ A aplicação usa Java 17+, Swing e Java2D, sem dependências externas. Cada cen
 - `Obstacle`: volume circular e tipo de elemento do parque.
 - `SteeringBehavior`: contrato para produzir uma força vetorial.
 - `Seek`, `Flee`, `Arrive`, `Wander`, `ObstacleAvoidance` e `PathFollowing`: implementação de cada comportamento.
-- `SteeringMixer`: soma ponderada e contenção auxiliar das bordas.
+- `SteeringMixer`: soma ponderada e contenção auxiliar das bordas; calcula primeiro a intenção dos comportamentos de movimento e depois o desvio, que considera essa intenção.
 
 O Model não importa `java.awt` nem `javax.swing`. Regras de movimentação não dependem de componentes ou tamanho da janela. O mundo tem 1080×720 unidades e a View aplica escala para caber na área disponível.
 

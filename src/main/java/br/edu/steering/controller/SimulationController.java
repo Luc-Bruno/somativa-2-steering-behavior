@@ -105,11 +105,11 @@ public final class SimulationController implements MainView.Actions {
             view.setPaused(true);
             view.setMessage(
                     "Desenhe a rota com cliques: mínimo de 2 pontos. Depois use Continuar ou"
-                        + " Espaço. Selecionar Rota novamente inicia outro desenho.");
+                            + " Espaço. Selecionar Rota novamente inicia outro desenho.");
         } else if (value == MainView.Tool.OBSTACLE) {
             view.setMessage(
                     "Clique para adicionar um canteiro. Botão direito remove um obstáculo."
-                        + " Reiniciar restaura o mapa original.");
+                            + " Reiniciar restaura o mapa original.");
         } else view.setMessage(world.scenario().instruction());
         tool = value;
         view.showTool(tool);
@@ -133,11 +133,11 @@ public final class SimulationController implements MainView.Actions {
             view.setMessage(
                     !accepted
                             ? "Escolha pontos livres, separados por pelo menos 30 unidades (máximo"
-                                  + " de 18 pontos)."
+                                    + " de 18 pontos)."
                             : world.draftRoute().size() < 2
                                     ? "Ponto inicial definido. Adicione pelo menos mais um ponto."
                                     : "Rota atualizada. Adicione outros pontos ou use Continuar /"
-                                          + " Espaço para testar.");
+                                            + " Espaço para testar.");
         } else {
             Agent clicked = world.agentAt(point);
             if (clicked != null) {
@@ -149,7 +149,7 @@ public final class SimulationController implements MainView.Actions {
                         world.addObstacle(point)
                                 ? "Canteiro adicionado. Observe como o pedestre reage."
                                 : "Escolha uma área livre e distante dos pedestres e do alvo."
-                                      + " Limite: 30 obstáculos.");
+                                        + " Limite: 30 obstáculos.");
             else if (world.scenario() == AgentProfile.WANDER
                     || world.scenario() == AgentProfile.FREE_WALK)
                 view.setMessage(
@@ -158,7 +158,7 @@ public final class SimulationController implements MainView.Actions {
                 view.setMessage(
                         world.setTarget(point)
                                 ? world.scenario().instruction()
-                                : "O alvo precisa estar em uma área livre.");
+                                : "Deixe espaço entre o alvo e os obstáculos para a chegada.");
         }
         refresh();
     }
