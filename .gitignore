@@ -1,0 +1,21 @@
+# Saídas de compilação
+*.class
+*.jar
+out/
+build/
+target/
+
+# Configurações locais de IDE
+.idea/
+*.iml
+.vscode/
+.classpath
+.project
+.settings/
+
+# Arquivos temporários de análise
+tmp/
+
+# Arquivos do sistema
+.DS_Store
+Thumbs.db
